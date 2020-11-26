@@ -7,7 +7,7 @@ import _ from 'lodash';
  * @author: steve.deng
  * @Date: 2020-11-25 18:02:28
  * @LastEditors: steve.deng
- * @LastEditTime: 2020-11-26 15:40:45
+ * @LastEditTime: 2020-11-26 16:08:09
  */
 export function useLoadMore(
     refreshElm: Ref<null | HTMLElement>,
@@ -36,6 +36,7 @@ export function useLoadMore(
     const hasMore = computed(() => {
         return store.state.home.lessons.hasMore;
     });
+    //test
     return {
         isLoading,
         hasMore
