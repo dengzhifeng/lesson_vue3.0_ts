@@ -3,17 +3,17 @@
  * @author: steve.deng
  * @Date: 2020-11-20 17:43:05
  * @LastEditors: steve.deng
- * @LastEditTime: 2020-11-26 09:55:23
+ * @LastEditTime: 2020-11-26 15:41:31
 -->
 <template>
-    <div class="home">
+    <div>
         <!-- 首页头部 -->
         <HomeHeader
             :category="category"
             @setCurrentCategory="setCurrentCategory"
         />
         <!-- 轮播图 -->
-        <div ref="refreshElm">
+        <div class="home" ref="refreshElm">
             <Suspense>
                 <template #default>
                     <HomeSwiper></HomeSwiper>
@@ -25,6 +25,8 @@
 
             <!-- 课程列表 -->
             <HomeList :lessonList="lessonList"></HomeList>
+            <div class="bottom" v-if="isLoading">正在加载中...</div>
+            <div class="bottom" v-if="!hasMore">加载完毕</div>
         </div>
     </div>
 </template>
@@ -80,16 +82,18 @@ export default defineComponent({
         // DOM节点
         const refreshElm = ref<null | HTMLElement>(null);
 
-        // const { isLoading, haseMore } = useLoadMore(
-        //     refreshElm,
-        //     store,
-        //     `home/${Types.SET_LESSON_LIST}`
-        // );
+        const { isLoading, hasMore } = useLoadMore(
+            refreshElm,
+            store,
+            `home/${Types.SET_LESSON_LIST}`
+        );
         return {
             category,
             setCurrentCategory,
             lessonList,
-            refreshElm
+            refreshElm,
+            isLoading,
+            hasMore
         };
     }
 });
@@ -101,5 +105,10 @@ export default defineComponent({
     bottom: 50px;
     width: 100%;
     overflow-y: auto;
+    .bottom {
+        text-align: center;
+        padding: 10px;
+        color: #bdbdbd;
+    }
 }
 </style>
